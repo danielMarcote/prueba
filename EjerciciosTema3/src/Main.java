@@ -259,22 +259,40 @@ public class Main {
 	}
 	
 	//Ejercicio 7_3
-	//Funcion para calcular la media total de todos los departamentos en conjunto
-	public static double mediaTotalSemanal(int matriz[][]) {
-		double toret = 0.0;
-		
+	
+	//Función que nos devuelve el total de faltas
+	public static int absentismoTotal(int matriz[][]) {
+		int toret = 0;
+		double[] aux = faltasPorDepart(matriz);
+		for(int i = 0; i < aux.length;i++) {
+			toret += aux[i];
+		}
 		return toret;
 	}
 	
-	//Funcion para calcular la media de ausencias por departamento
-	public static double[] mediaPorDepartamento(int matriz[][]) {
-		double toret[];
-		
-		return toret[];
+	//Función que nos devuelve el total de faltas por departamento
+	public static double[] faltasPorDepart(int matriz[][]) {
+		double toret[] = new double[matriz[0].length];
+		for(int i = 0; i < matriz.length; i++) {
+			for( int j = 0; j < matriz[i].length; j++) {
+				toret[j] += matriz[i][j];
+			}
+		}
+		return toret;
 	}
 	
 	public static void absentismoPorDepart(int matriz[][]) {
-		
+		double faltasTotales = absentismoTotal(matriz);
+		double faltasPorDepartamento[] = faltasPorDepart(matriz);
+		System.out.println("Faltas totales: " + faltasTotales);
+		for(int i = 0; i < faltasPorDepartamento.length; i++) {
+			System.out.println(faltasPorDepartamento[i] + ",");
+		}
+		for(int i = 0; i < faltasPorDepartamento.length; i++) {
+			double aux = (faltasPorDepartamento[i]/faltasTotales)*100.0;
+			System.out.println("El % de faltas del departamento \n" 
+					+ i + " con respecto al total es: " + aux);
+		}
 	}
 	
 	//Función aux para rellenar matrices
@@ -287,6 +305,228 @@ public class Main {
 		}
 		return toret;
 	}
+	
+	//Función aux para rellenar matrices tridimensionales
+		public static int [][][] rellenoTrid(int col, int fil,int prof, int maxValue) {
+			int toret [][][] = new int[col][fil][prof];
+			for(int i = 0; i < toret.length; i++) {
+				for(int j = 0; j < toret[i].length; j++) {
+					for(int k = 0; k < toret[i][j].length;k++) {
+						toret[i][j][k] = (int) (Math.random() * maxValue);
+					}
+				}
+			}
+			return toret;
+		}
+		//Función aux para mostrar matrices tridimensionales
+		public static void mostrarTrid(int [][][] mEntrada) {
+			for(int i = 0; i < mEntrada.length; i++) {
+				System.out.print("\n");
+				for(int j = 0; j < mEntrada[i].length; j++) {
+					System.out.print("\n");
+					for(int k = 0; k < mEntrada[i][j].length; k++) {
+						System.out.print("[" + mEntrada[i][j][k] + "], ");
+					}
+				}
+			}
+			System.out.print("\n");
+		}
+	
+	//Ejercicio 8
+	//Procedimiento que resuelve los 3 apartados
+	//Tenemos en cuenta que la matriz es 4x10x12 (Provincias x Años x Meses)
+	public static void ejer8(int matriz[][][]) {
+		//0 Coruña, 1 es Pontevedra, 2 Lugo, 3 Ourense
+		//Apartado 1
+		int aux [] = new int[matriz.length];
+		for(int i = 0; i < matriz.length; i++) {
+			for(int j = 0; j < matriz[i].length; j++) {
+				for(int k = 0; k < matriz[i][j].length; k++) {
+					aux[i] += matriz[i][j][k];
+				}
+			}
+		}
+		int max = aux[0];
+		System.out.println("Columna " + 0 + " lluvias " + aux[0]);
+		int pos = 0;
+		for(int i = 1; i < aux.length; i++) {
+			System.out.println("Columna " + i + " lluvias " + aux[i]);
+			if(aux[i] > max) {
+				max = aux[i];
+				pos = i;
+			}
+		}
+		switch(pos) {
+		case 0: System.out.println("Chove de carallo na Coruña"); break;
+		case 1: System.out.println("Chove de carallo en Pontevedra"); break;
+		case 2: System.out.println("Chove de carallo en Lugo"); break;
+		case 3: System.out.println("Chove de carallo en Ourense"); break;
+		}
+		
+	
+		//Apartado 2
+		int menor[] = new int[4];
+		for (int i = 0; i < matriz.length; i++) {
+			for (int k = 0; k < matriz[i][9].length; k++) {
+				menor[i] += matriz[i][9][k];
+			}
+		}
+		int min = menor[0];
+		System.out.println("Columna " + 0 + " lluvias " + menor[0]);
+		int posicion = 0;
+		for(int i = 1; i < menor.length; i++) {
+			System.out.println("Columna " + i + " lluvias " + menor[i]);
+			if(menor[i] < min) {
+				min = menor[i];
+				posicion = i;
+			}
+		}
+		switch(posicion) {
+		case 0: System.out.println("Este ano casi non choveu na Coruña"); break;
+		case 1: System.out.println("Este ano casi non choveu en Pontevedra"); break;
+		case 2: System.out.println("Este ano casi non choveu en Lugo"); break;
+		case 3: System.out.println("Este ano casi non choveu en Ourense"); break;
+		}
+		
+		//Apartado 3
+		int mesMayor = matriz[3][5][0];
+		int posMesMayor = 0;
+		for(int i = 0; i < matriz[3][5].length; i++) {
+			System.out.println("Mes " + i + ":" + matriz[3][5][i]);
+			if(matriz[3][5][i] > mesMayor) {
+				mesMayor = matriz[3][5][i];
+				posMesMayor = i;
+			}
+		}
+		
+		switch(posMesMayor) {
+		case 0: System.out.println("Enero"); break;
+		case 1: System.out.println("Febrero"); break;
+		case 2: System.out.println("Marzo"); break;
+		case 3: System.out.println("Abril"); break;
+		case 4: System.out.println("Mayo"); break;
+		case 5: System.out.println("Junio"); break;
+		case 6: System.out.println("Julio"); break;
+		case 7: System.out.println("Agosto"); break;
+		case 8: System.out.println("Sept"); break;
+		case 9: System.out.println("Oct"); break;
+		case 10: System.out.println("Nov"); break;
+		case 11: System.out.println("Diciembre"); break;
+
+		}
+	}
+	
+	//Ejercicio 14
+	//Funciona pero falla si se repiten caracteres en una de las dos cadenas
+	// y teniendo la misma longitud
+	public static boolean anagrama(String cad1, String cad2) {
+		int aux = 0;
+		if(cad1.length() == cad2.length()) {
+			for(int i = 0; i < cad1.length(); i++) {
+				for(int j = 0; j < cad2.length(); j++) {
+					if(cad1.charAt(i) == cad2.charAt(j)) {
+						aux++;
+					}
+				}
+			}
+			if(aux == cad1.length()) {
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			return false;
+		}
+	}
+	
+	//TODO realizarlo haciendo uso de indexOF e indexOF+fromindex
+	
+	//Ejercicio 15
+	
+	public static void separarPalabras(String frase) {
+		 String[] palabras = frase.split(" "); //Separa la string de entrada en substrings usando
+		 //como pivote el caracter o caracteres que se pasan como parametro
+	        for (String palabra : palabras) { //for (int i = 0; i < palabras.length(); i++)
+	        	if(palabra.length()>0) System.out.println(palabra + ": " + palabra.length());
+	        }
+	}
+	
+	
+	//Ejercicio 16
+	public static String eliminaBlancosDuplicados(String frase) {
+		String toret = "";
+		String[] palabras = frase.split(" "); //Separa la string de entrada en substrings usando
+		 //como pivote el caracter o caracteres que se pasan como parametro
+	        for (String palabra : palabras) { //for (int i = 0; i < palabras.length(); i++)
+	        	if(palabra.length()>0) toret += palabra + " ";
+	        }
+	        toret = toret.substring(0, toret.length()-1);
+		return toret;
+	}
+	
+	//Ejercicio 17
+	public static void ejer17(String frase) {
+		if(frase.length() < 81) {
+			 String[] palabras = frase.split(" "); //Separa la string de entrada en substrings usando
+			 //como pivote el caracter o caracteres que se pasan como parametro
+		        for (String palabra : palabras) { //for (int i = 0; i < palabras.length(); i++)
+		        	if(palabra.length()>0) {
+		        		if(palabra.length() < 16) {
+		        			System.out.println(palabra + ": " + palabra.length());
+		        		}
+		        	}
+		        }
+		} else {
+			System.out.println("Una frase solo puede tener como máximo 80 caracteres");
+		}
+	}
+	
+	//Ejercicio 18
+	//Minusculas comunes y no comunes
+	public static void ejer18(String cad1, String cad2) {
+		String minuscA = "", minuscB = "", toPrint = "";
+		int cont = 0;
+		for(int i = 0; i < cad1.length(); i++) {
+			if(Character.isLowerCase(cad1.charAt(i))) {
+				minuscA += cad1.charAt(i);
+			}
+		}
+		for(int i = 0; i < cad2.length(); i++) {
+			if(Character.isLowerCase(cad2.charAt(i))) {
+				minuscB += cad2.charAt(i);
+			}
+		}
+		for(int i = 0; i < minuscA.length(); i++) {
+			if(minuscB.indexOf(minuscA.charAt(i)) != -1) {
+				toPrint += minuscA.charAt(i);
+			} else {
+				cont++;
+			}
+		}
+		for(int i = 0; i < minuscB.length(); i++) {
+			if(minuscA.indexOf(minuscB.charAt(i)) == -1) {
+				cont++;
+			}
+		}
+		System.out.println("Minusculas comunes: " + toPrint);
+		System.out.println("Numero de no comunes: " + cont);
+	}
+	
+	//Ejercicio 19
+	public static void plurales(String frase) {
+		String[] palabras = frase.split(" ");
+	    for (String palabra : palabras) { //for (int i = 0; i < palabras.length(); i++)
+	       if(palabra.endsWith("a") || palabra.endsWith("e") || palabra.endsWith("i") ||
+	    		   palabra.endsWith("o") || palabra.endsWith("u")) {
+	    	   palabra += "s";
+	       } else {
+	    	   palabra += "es";
+	       }
+	       System.out.println(palabra);
+	    }
+	    
+	}
+	
 	
 	public static void main(String[] args) {
 //		// TODO Auto-generated method stub
@@ -305,7 +545,7 @@ public class Main {
 //		ejer2_2();
 //		System.out.println();
 //		//Ejercicio2_3
-//		ejer2_3();
+//		ejer2_3(); 
 		//Ejercicio2_4
 //		ejer2_4();
 		//Ejercicio 3
@@ -333,14 +573,29 @@ public class Main {
 //		ejer6_2(matrizPrueba);
 //		ejer6_3(matrizPrueba);
 		//Ejercicio 7
-		int matriz[][] = relleno(5,10,10);
-		ejer6_2(matriz);
-		System.out.println(ejer7_1plus(0,matriz));
-		System.out.println(ejer7_1plus(1,matriz));
-		System.out.println(ejer7_1plus(2,matriz));
-		System.out.println(ejer7_1plus(3,matriz));
-		System.out.println(ejer7_1plus(4,matriz));
-		System.out.println(diaMasAusencias(matriz));
-		scan.close();
+//		int matriz[][] = relleno(5,10,10);
+//		ejer6_2(matriz);
+//		System.out.println(ejer7_1plus(0,matriz));
+//		System.out.println(ejer7_1plus(1,matriz));
+//		System.out.println(ejer7_1plus(2,matriz));
+//		System.out.println(ejer7_1plus(3,matriz));
+//		System.out.println(ejer7_1plus(4,matriz));
+//		System.out.println(diaMasAusencias(matriz));
+//		absentismoPorDepart(matriz);
+		
+//		int matriz[][][] = rellenoTrid(4, 10, 12, 100);
+//		mostrarTrid(matriz);
+//		ejer8(matriz);
+//		scan.close();
+		
+		//Ejercicio 15
+//		String prueba = "Vamos   a probar  el ejercicio";
+//		separarPalabras(prueba);
+//		//Ejercicio 16
+//		System.out.println(eliminaBlancosDuplicados(prueba));
+		//Ejercicio 17
+//		ejer17("Esto es    una frase con palabras validas y otras palapfnwgbujqweoprign");
+//		ejer18("Cadena", "cadena");
+		plurales("patata gato pan leche licor cafe");
 	}
 }
