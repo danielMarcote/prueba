@@ -180,7 +180,7 @@ public class Main {
 	}
 	
 	//Ejercicio6_2 nos vale también para mostrar cualquier matriz de entrada
-	public static void ejer6_2(int [][] mEntrada) {
+	public static void mostrarMatriz(int [][] mEntrada) {
 		for(int i = 0; i < mEntrada.length; i++) {
 			System.out.print("\n");
 			for(int j = 0; j < mEntrada[i].length; j++) {
@@ -416,6 +416,97 @@ public class Main {
 		}
 	}
 	
+	//Ejercicio 9
+	//Solo va a funcionar con matrices de la misma dimension
+	public static int[][] sumaMatrices(int matriz1[][], int matriz2[][]) {
+		int suma[][] = new int[matriz1.length][matriz1[0].length];
+		for (int i = 0; i < matriz1.length; i++) {
+			for (int j = 0; j < matriz1[i].length; j++) {
+				suma[i][j] = matriz1[i][j] + matriz2[i][j];
+			}
+		}
+		return suma;
+	}
+	
+	//Multiplicar TODO
+	
+	//Ejercicio 10
+	public static boolean simetrica(int [][] entrada) {
+		for (int i = 0; i < entrada.length; i++) {
+			for (int j = 0; j < entrada[i].length; j++) {
+				if(entrada[i][j] != entrada[j][i]) return false;
+			}
+		}
+		return true;
+	}
+	
+	//Ejercicio 11
+	public static void repetidos(String [] entrada) {
+		String indice[] = new String[entrada.length];
+		for (int i = 0; i < indice.length; i++) {
+			indice[i] = "";
+		}
+		for(int i = 0; i < entrada.length; i++) {
+			System.out.print(entrada[i] + " ");
+			for(int j = 0; j < entrada.length; j++) {
+				if(entrada[i].equals(indice[j])) {
+					entrada[i] = "";
+				}
+			}
+			for(int j = 0; j < entrada.length; j++) {
+				if(i != j) {
+					if(entrada[i].equals(entrada[j])) {
+						indice[i] = entrada[j];
+					}
+				}
+			}
+		}
+		System.out.println();
+		for(int i = 0; i < entrada.length; i++){
+			if(!entrada[i].equals("")) System.out.print(entrada[i] + " ");
+		}
+	}
+	
+	// Ejercicio 12
+	//Por revisar, da la vuelta verticalmente tambien
+	public static void ejer12(int m[][]) {
+		int aux = m[0][0];
+		int j = 0;
+		for (int i = 0; i < m.length/2; i++) {
+			for (j = 0; j < m[i].length; j++) {
+				aux = m[i][j];
+				m[i][j] = m[m.length-1-i][m[i].length-1-j];
+				m[m.length-1-i][m[i].length-1-j] = aux;
+			}
+		}
+	}
+
+	// Ejercicio 13
+	//Por revisar, solo funciona con 4x4 y pichi picha
+	public static void ejer13(int m[][]) {
+		int ultima = m[3][3];
+		int aux1 = m[0][0];
+		int aux2 = 0;
+		int j = 1;
+		int i = 0;
+		do {
+			do {
+				if (j % 2 == 0) {
+					aux1 = m[j][i];
+					m[j][i] = aux2;
+					j++;
+				} else {
+					aux2 = m[j][i];
+					m[j][i] = aux1;
+					j++;
+				}
+			} while (j < 4);
+			i++;
+			j = 0;
+		} while (i < 4);
+		m[0][0] = ultima;
+	}
+
 	//Ejercicio 14
 	//Funciona pero falla si se repiten caracteres en una de las dos cadenas
 	// y teniendo la misma longitud
@@ -570,11 +661,11 @@ public class Main {
 //			}
 //		}
 //		int matrizPrueba[][] = ejer6_1(matrizSesenta);
-//		ejer6_2(matrizPrueba);
+//		mostrarMatriz(matrizPrueba);
 //		ejer6_3(matrizPrueba);
 		//Ejercicio 7
 //		int matriz[][] = relleno(5,10,10);
-//		ejer6_2(matriz);
+//		mostrarMatriz(matriz);
 //		System.out.println(ejer7_1plus(0,matriz));
 //		System.out.println(ejer7_1plus(1,matriz));
 //		System.out.println(ejer7_1plus(2,matriz));
@@ -583,10 +674,35 @@ public class Main {
 //		System.out.println(diaMasAusencias(matriz));
 //		absentismoPorDepart(matriz);
 		
+		//Ejercicio 8
 //		int matriz[][][] = rellenoTrid(4, 10, 12, 100);
 //		mostrarTrid(matriz);
 //		ejer8(matriz);
 //		scan.close();
+		
+		//Ejercicio 9
+//		int matriz1[][] = relleno(2,3,10);
+//		mostrarMatriz(matriz1);
+//		int matriz2[][] = relleno(2,3,10);
+//		mostrarMatriz(matriz2);
+//		mostrarMatriz(sumaMatrices(matriz1, matriz2));
+		
+		//Ejercicio 10
+//		int[][] simetrica = {{1,0,1},{0,1,0},{1,0,1}};
+//		int[][] noSimetrica = {{1,0,1},{0,1,1},{1,0,1}};
+//		System.out.println(simetrica(simetrica));
+//		System.out.println(simetrica(noSimetrica));
+		
+		//Ejercicio 11
+//		String [] prueba = {"a","b","c","abrieron los bares :)","c","a","d"};
+//		repetidos(prueba);
+		
+		//Ejercicio 12 y 13
+		int m[][] = relleno(4,4,10);
+		mostrarMatriz(m);
+//		ejer12(m);
+		ejer13(m);
+		mostrarMatriz(m);
 		
 		//Ejercicio 15
 //		String prueba = "Vamos   a probar  el ejercicio";
@@ -596,6 +712,7 @@ public class Main {
 		//Ejercicio 17
 //		ejer17("Esto es    una frase con palabras validas y otras palapfnwgbujqweoprign");
 //		ejer18("Cadena", "cadena");
-		plurales("patata gato pan leche licor cafe");
+//		plurales("patata gato pan leche licor cafe");
+		
 	}
 }
