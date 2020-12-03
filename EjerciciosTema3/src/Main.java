@@ -468,15 +468,13 @@ public class Main {
 	}
 	
 	// Ejercicio 12
-	//Por revisar, da la vuelta verticalmente tambien
 	public static void ejer12(int m[][]) {
 		int aux = m[0][0];
-		int j = 0;
-		for (int i = 0; i < m.length/2; i++) {
-			for (j = 0; j < m[i].length; j++) {
+		for (int i = 0; i < m.length; i++) {
+			for (int j = 0; j < m[i].length/2; j++) {
 				aux = m[i][j];
-				m[i][j] = m[m.length-1-i][m[i].length-1-j];
-				m[m.length-1-i][m[i].length-1-j] = aux;
+				m[i][j] = m[i][m[i].length-1-j];
+				m[i][m[i].length-1-j] = aux;
 			}
 		}
 	}
@@ -484,27 +482,24 @@ public class Main {
 	// Ejercicio 13
 	//Por revisar, solo funciona con 4x4 y pichi picha
 	public static void ejer13(int m[][]) {
-		int ultima = m[3][3];
-		int aux1 = m[0][0];
-		int aux2 = 0;
-		int j = 1;
-		int i = 0;
-		do {
-			do {
-				if (j % 2 == 0) {
-					aux1 = m[j][i];
-					m[j][i] = aux2;
-					j++;
-				} else {
-					aux2 = m[j][i];
-					m[j][i] = aux1;
-					j++;
+		int aux = m[m.length-1][m[m.length-1].length-1];
+		for (int i = 0; i < m.length; i++) {
+			if (i % 2 == 0) {
+				for (int j = 0; j < m[i].length; j++) {
+					m[i][j] = aux;
+					aux = m[i][j+1];
+					m[i][j] = m[i][j-1];
+					m[i][m[i].length - 1 - j] = aux;
 				}
-			} while (j < 4);
-			i++;
-			j = 0;
-		} while (i < 4);
-		m[0][0] = ultima;
+			} else {
+				for (int j = 0; j < m[i].length; j++) {
+					aux = m[i][j];
+					m[i][j] = m[i][m[i].length - 1 - j];
+					m[i][m[i].length - 1 - j] = aux;
+				}
+			}
+
+		}
 	}
 
 	//Ejercicio 14
@@ -698,10 +693,10 @@ public class Main {
 //		repetidos(prueba);
 		
 		//Ejercicio 12 y 13
-		int m[][] = relleno(4,4,10);
+		int m[][] = relleno(4,4,100);
 		mostrarMatriz(m);
-//		ejer12(m);
-		ejer13(m);
+		ejer12(m);
+//		ejer13(m);
 		mostrarMatriz(m);
 		
 		//Ejercicio 15
